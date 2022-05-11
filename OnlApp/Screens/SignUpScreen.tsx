@@ -5,10 +5,14 @@ import {
     TextInput,
     Image,
     ImageBackground,
+    StyleSheet,
     TouchableOpacity,
 } from 'react-native';
 
 function SignUpScreen(props) {
+
+    const{navigation, route} = props
+    const{navigate, goBack} = navigation
     return (
         <View
             style={{
@@ -21,11 +25,7 @@ function SignUpScreen(props) {
                     flex: 10,
                 }}>
                 <Text
-                    style={{
-                        color: 'black',
-                        fontSize: 35,
-                        marginLeft: 10,
-                    }}>
+                    style={styles.head}>
                     {' '}
                     SIGN UP
                 </Text>
@@ -36,82 +36,60 @@ function SignUpScreen(props) {
                     flex: 80,
                 }}>
                 <View
-                    style={{
-                        height: 50,
-                        marginHorizontal: 10,
-                        flexDirection: 'column',
-                    }}>
+                    style={styles.body}>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Name
                     </Text>
-                    <TextInput
-                        placeholder="Enter name"
-                        placeholderTextColor={'white'}
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter name"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Email adress
                     </Text>
-                    <TextInput
-                        placeholder="Enter email"
-                        placeholderTextColor={'white'}
-                        
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter email"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Password
                     </Text>
-                    <TextInput
-                        placeholder="Enter password"
-                        placeholderTextColor={'white'}
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter password"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
+
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Confirm Password
                     </Text>
-                    <TextInput
-                        placeholder="Confirm password"
-                        placeholderTextColor={'white'}
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Confirm password"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: 'black',
-                            marginTop: 10,
-                            width: 80,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
+                        style={styles.button}>
                         <Text
-                            style={{
-                                color: 'white',
-                                padding: 10,
-                            }}>
+                            style={styles.buttontext}>
                             Register
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: '#F0F8FF',
-                            marginTop: 10,
-                            width: 160,
-                        }}>
+                        onPress={() => {
+                            navigate('SignInScreen')
+                        }}
+                        style={styles.swapbutton}>
                         <Text style={{
                             color: 'black',
                         }}>
@@ -124,4 +102,39 @@ function SignUpScreen(props) {
     );
 }
 
+const styles = StyleSheet.create({
+    text: {
+        fontSize: 20,
+        marginTop: 10,
+        color: 'black'
+    },
+    textinput: {
+        backgroundColor: 'lightgray'
+    },
+    button: {
+        backgroundColor: 'black',
+        marginTop: 10,
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttontext:{
+        color: 'white',
+        padding: 10,
+    },
+    swapbutton: {
+        backgroundColor: '#F0F8FF',
+        marginTop: 10,
+        width: 160,
+    },
+    body: {
+        height: 50,
+        marginHorizontal: 10,
+    },
+    head: {
+        color: 'black',
+        fontSize: 35,
+        marginLeft: 10,
+    }
+})
 export default SignUpScreen;

@@ -5,10 +5,14 @@ import {
     TextInput,
     Image,
     ImageBackground,
+    StyleSheet,
     TouchableOpacity,
 } from 'react-native';
 
 function SignInScreen(props) {
+    const{navigation, route} = props
+    const{navigate, goBack} = navigation
+    
     return (
         <View
             style={{
@@ -21,11 +25,7 @@ function SignInScreen(props) {
                     flex: 10,
                 }}>
                 <Text
-                    style={{
-                        color: 'black',
-                        fontSize: 35,
-                        marginLeft: 10,
-                    }}>
+                    style={styles.head}>
                     {' '}
                     SIGN IN
                 </Text>
@@ -36,56 +36,43 @@ function SignInScreen(props) {
                     flex: 80,
                 }}>
                 <View
-                    style={{
-                        height: 50,
-                        marginHorizontal: 10,
-                        flexDirection: 'column',
-                    }}>
+                    style={styles.body}>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                        }}>
+                        style={styles.text}>
                         Email adress
                     </Text>
-                    <TextInput
-                        placeholder="Enter email"
-                        placeholderTextColor={'white'}
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter email"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                        }}>
+                        style={styles.text}>
                         Password
                     </Text>
-                    <TextInput
-                        placeholder="Enter password"
-                        placeholderTextColor={'white'}
-                        secureTextEntry={true}
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter password"
+                            placeholderTextColor={'white'}
+                            secureTextEntry={true}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: 'black',
-                            marginTop: 10,
-                            width: 80,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
+                    onPress={() => {
+                        navigate('ListProduct')
+                    }}
+                        style={styles.button}>
                         <Text
-                            style={{
-                                color: 'white',
-                                padding: 10,
-                            }}>
+                            style={styles.buttontext}>
                             Sign in
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: 'white',
-                            marginTop: 10,
-                            width: 160,
-                        }}>
+                        onPress={() => {
+                            navigate('SignUpScreen')
+                        }}
+                        style={styles.swap}>
                         <Text style={{
                             color: 'black',
                         }}>
@@ -98,4 +85,39 @@ function SignInScreen(props) {
     );
 }
 
+const styles = StyleSheet.create({
+    text: {
+        fontSize: 20,
+        marginTop: 10,
+        color: 'black'
+    },
+    body: {
+        height: 50,
+        marginHorizontal: 10,
+    },
+    button: {
+        backgroundColor: 'black',
+        marginTop: 10,
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttontext: {
+        color: 'white',
+        padding: 10,
+    },
+    swap: {
+        backgroundColor: '#F0F8FF',
+        marginTop: 10,
+        width: 160,
+    },
+    textinput:{
+        backgroundColor:'lightgray'
+    },
+    head:{
+        color: 'black',
+        fontSize: 35,
+        marginLeft: 10,
+    }
+})
 export default SignInScreen;

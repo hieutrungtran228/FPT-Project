@@ -5,6 +5,7 @@ import {
     TextInput,
     Image,
     ImageBackground,
+    StyleSheet,
     TouchableOpacity,
 } from 'react-native';
 
@@ -21,11 +22,7 @@ function ShippingScreen(props) {
                     flex: 10,
                 }}>
                 <Text
-                    style={{
-                        color: 'black',
-                        fontSize: 35,
-                        marginLeft: 10,
-                    }}>
+                    style={styles.head}>
                     {' '}
                     SHIPPING
                 </Text>
@@ -36,71 +33,49 @@ function ShippingScreen(props) {
                     flex: 80,
                 }}>
                 <View
-                    style={{
-                        height: 50,
-                        marginHorizontal: 10,
-                        flexDirection: 'column',
-                    }}>
+                    style={styles.body}>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Address
                     </Text>
-                    <TextInput
-                        placeholder="Enter address"
-                        placeholderTextColor={'white'}
-                        
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter address"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         City
                     </Text>
-                    <TextInput
-                        placeholder="Enter city"
-                        placeholderTextColor={'white'}
-                        
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter city"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Postal Code
                     </Text>
-                    <TextInput
-                        placeholder="Enter postal code"
-                        placeholderTextColor={'white'}
-                        
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter postal code"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            marginTop: 10,
-                            color: 'black'
-                        }}>
+                        style={styles.text}>
                         Country
                     </Text>
-                    <TextInput
-                        placeholder="Enter country"
-                        placeholderTextColor={'white'}
-                        
-                    />
+                    <View style={styles.textinput}>
+                        <TextInput
+                            placeholder="Enter country"
+                            placeholderTextColor={'white'}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: 'black',
-                            marginTop: 10,
-                            width: 80,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
+                        style={styles.button}>
                         <Text
                             style={{
                                 color: 'white',
@@ -115,4 +90,30 @@ function ShippingScreen(props) {
     );
 }
 
+const styles = StyleSheet.create({
+    head:{
+        color: 'black',
+        fontSize: 35,
+        marginLeft: 10,
+    },
+    text:{
+        fontSize: 20,
+        marginTop: 10,
+        color: 'black'
+    },
+    textinput:{
+        backgroundColor:'lightgray'
+    },
+    button:{
+        backgroundColor: 'black',
+        marginTop: 10,
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    body:{
+        height: 50,
+        marginHorizontal: 10,
+    },
+})
 export default ShippingScreen;

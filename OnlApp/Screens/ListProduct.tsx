@@ -5,91 +5,144 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    FlatList
+    FlatList,
+    StyleSheet
 } from 'react-native'
-import ItemProduct from "../data/ItemProduct";
-import Item from "../data/ItemProduct";
+import getProducts from "../data/ItemProduct";
 
+const ListProduct = () => {
 
-function ListProduct(props) {
-    
-    const [product, setProduct] = useState({})
+    const [product, setProduct] = useState([])
     useEffect(() => {
-        Item()
+        getProducts()
             .then(responeProduct => setProduct(responeProduct))
-    },[])
-    const {name , price, numreview, brand, category, cit, createdAt, 
-        des, rate, updatedAt, user, __v, _id, reComment} = product
-    
+    }, [])
+    const [searchText, setSearchText] = useState('')
+    const newProduct = product.map((item,) => "https://shop-ec-pro.herokuapp.com/" + item.image)
+    const renderItems = ({ item, index, image }) => {
+        return (
+            <View style={styles.list}>
+                <View style={{
+                    height: 150,
+                    backgroundColor: 'green',
+                }}>
+                    {newProduct.map((photo) => {
+                        return (
+                            <View style={{
+                                backgroundColor:'red',
+                                height:30,
+                                width:178,
+                                marginBottom:16
+                            }}>
+                                <Image source={{ uri: photo }} />
+                            </View>
+                        );
+                    })}
+                </View>
+                <View>
+                    <Text style={styles.textlist}>{item.name}</Text>
+                    <Text style={styles.textlist}>{item.numReviews} reviews</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Text style={styles.textlist}>{item.rating}</Text>
+                        <Image
+                            style={styles.star}
+                            source={require('../assets/star.png')} />
+                    </View>
+                    <Text style={styles.price}>${item.price}</Text>
+                </View>
+            </View>
+            
+        )
+    }
     return (
         <View style={{
             flex: 1,
-            backgroundColor: 'green'
+            backgroundColor: 'lightblue'
         }}>
-            
-            <Text>name : {product.name}</Text>
+            <View style={styles.head}>
+                <Image
+                    style={styles.icon}
+                    source={require('../assets/search.png')} />
+                <TextInput style={styles.textinput}
+                    autoCorrect={false}
+                    onChangeText={(text) => {
+                        setSearchText(text)
+                    }}
+                />
+            </View>
+            <FlatList
+                style={{
+                    flex: 1,
+                }}
+                data={product.filter(eachProduct => eachProduct.name.toLowerCase()
+                                        .includes(searchText.toLowerCase()))}
+                numColumns={2}
+                renderItem={renderItems}
+                keyExtractor={eachProduct => eachProduct.name}
+            />
         </View>
     )
 }
 
+
+const styles = StyleSheet.create({
+    textlist: {
+        marginTop: 5,
+        color: 'black',
+        marginHorizontal: 10,
+    },
+    price: {
+        color: 'black',
+        fontSize: 20,
+        marginHorizontal: 10,
+    },
+    head: {
+        marginHorizontal: 10,
+        marginVertical: 10,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    icon: {
+        width: 20,
+        height: 20,
+        position: 'absolute',
+        left: 10,
+        tintColor: 'black'
+    },
+    textinput: {
+        flex: 1,
+        backgroundColor: '#AEB1B7',
+        height: 40,
+        borderRadius: 8,
+        opacity: 0.6,
+        paddingStart: 35,
+    },
+    list:{
+        backgroundColor: 'white',
+        flex: 0.5,
+        height: 270,
+        margin: 10,
+        marginBottom: 5,
+        marginTop: 5,
+        marginRight: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'black'
+    },
+    star:{
+        width: 15,
+        height: 15,
+        marginTop: 7,
+    },
+})
 export default ListProduct
-
 /** 
-<Image 
-style={{
-    width:168,
-    height:160,
-    resizeMode: 'cover',
-    marginTop:5,
-    marginHorizontal:5,
-}}
-source={{
-    uri: item.url
-}}/>
-<Text style={{
-    color:'black',
-    marginHorizontal:15,
-}}>
-    {item.productName}
-</Text>
-
-<FlatList
-                style={{ marginTop: 5 }}
-                data={ItemProduct}
-                numColumns={2}
-                renderItem={({ item, index, }) => <View style={{
-                    flex: 0.5,
-                    height: 300,
-                    margin: 10,
-                    marginBottom: 5,
-                    marginLeft: index % 2 == 0 ? 10 : 0,
-                    marginTop: 5,
-                    marginRight: 10,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: 'black'
-                }}>
-                    <View style={{
-                        flexDirection: 'column',
-                    }}>
-                        <Image
-                            style={{
-                                width: 168,
-                                height: 160,
-                                resizeMode: 'cover',
-                                marginTop: 5,
-                                marginHorizontal: 5,
-                            }}
-                            source={{
-                                uri: item.url
-                            }} />
-                        <Text style={{
-                            color: 'black',
-                            marginHorizontal: 15,
-                        }}>
-                            {item.productName}
-                        </Text>
-                    </View>
-                </View>}
-            />
+{newProduct.map((photo) => {
+    return (
+        <Image style={{ width: 174, height: 150 }} 
+        source={{ uri: photo }} />
+    );
+})}
 */

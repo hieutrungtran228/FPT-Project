@@ -6,6 +6,7 @@ import {
     Image,
     ImageBackground,
     TouchableOpacity,
+    StyleSheet,
 } from 'react-native';
 
 function PaymentScreen(props) {
@@ -21,11 +22,7 @@ function PaymentScreen(props) {
                     flex: 10,
                 }}>
                 <Text
-                    style={{
-                        color: 'black',
-                        fontSize: 35,
-                        marginLeft: 10,
-                    }}>
+                    style={styles.head}>
                     {' '}
                     PAYMENT METHOD
                 </Text>
@@ -36,35 +33,18 @@ function PaymentScreen(props) {
                     flex: 80,
                 }}>
                 <View
-                    style={{
-                        height: 50,
-                        marginHorizontal: 10,
-                        flexDirection: 'column',
-                    }}>
+                    style={styles.body}>
                     <Text
-                        style={{
-                            fontSize: 25,
-                            marginTop: 10,
-                        }}>
+                        style={styles.text}>
                         Select method
                     </Text>
                     <Text>
                         đoạn này thiếu
                     </Text>
                     <TouchableOpacity
-                        style={{
-                            backgroundColor: 'black',
-                            marginTop: 10,
-                            width: 80,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius:10,
-                        }}>
+                        style={styles.button}>
                         <Text
-                            style={{
-                                color: 'white',
-                                padding: 10,
-                            }}>
+                            style={styles.textbutton}>
                             Continue
                         </Text>
                     </TouchableOpacity>
@@ -74,4 +54,32 @@ function PaymentScreen(props) {
     );
 }
 
+const styles = StyleSheet.create({
+    head: {
+        color: 'black',
+        fontSize: 35,
+        marginLeft: 10,
+    },
+    body:{
+        height: 50,
+        marginHorizontal: 10,
+    },
+    text:{
+        fontSize: 25,
+        marginTop: 10,
+        color:'black',
+    },
+    button:{
+        backgroundColor: 'black',
+        marginTop: 10,
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:10,
+    },
+    textbutton:{
+        color: 'white',
+        padding: 10,
+    }
+})
 export default PaymentScreen;

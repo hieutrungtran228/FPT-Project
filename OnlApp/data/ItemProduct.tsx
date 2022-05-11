@@ -27,39 +27,20 @@ export interface IProduct {
     updatedAt: string;
 }
 
-const Item = async () => {
+const getProducts = async () => {
     try {
-        alert('buần')
+        //alert('buần')
         let response = await axois.get('https://shop-ec-pro.herokuapp.com/api/products')
         if (response.status != 200){
             throw 'lỗi rồi'
         }
         if (response.data.products.length > 0){
-            let responeProduct = response.data.products[2];
-            let product = {};
-            product.name = responeProduct.name
-            product.price = responeProduct.price
-            product.numreview = responeProduct.numReviews
-            product.brand = responeProduct.brand
-            product.category = responeProduct.category
-            product.cit = responeProduct.countInStock
-            product.createdAt= responeProduct.createdAt
-            product.des = responeProduct.description
-            product.rate = responeProduct.rating
-            product.updatedAt = responeProduct.updatedAt
-            product.user = responeProduct.user
-            product.__v = responeProduct.__v
-            product._id = responeProduct._id
-            product.reComment = responeProduct.reviews
-            return product
-            
+            let responeProduct = response.data.products;
+            return responeProduct
         }
         throw 'no product'
-        
     } catch (error) {
         throw error
-        
     }
-    
 }
-export default Item
+export default getProducts

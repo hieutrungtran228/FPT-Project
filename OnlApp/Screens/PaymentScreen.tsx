@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
+import { Button, Checkbox, RadioButton} from 'react-native-paper';
 
 function PaymentScreen(props) {
     return (
@@ -38,16 +39,23 @@ function PaymentScreen(props) {
                         style={styles.text}>
                         Select method
                     </Text>
-                    <Text>
-                        đoạn này thiếu
-                    </Text>
-                    <TouchableOpacity
-                        style={styles.button}>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={{marginTop:5, fontSize:17}}>
+                            PayPal or Credit Card
+                        </Text>
+                        <RadioButton.Android value='test' status='checked' color='gray'/>
+                    </View>
+                    <Button
+                        style={styles.button}
+                        mode='contained'
+                        color='black'
+                        onPress={() => {
+                        }}>
                         <Text
-                            style={styles.textbutton}>
+                            style={styles.buttontext}>
                             Continue
                         </Text>
-                    </TouchableOpacity>
+                    </Button>
                 </View>
             </View>
         </View>
@@ -70,16 +78,19 @@ const styles = StyleSheet.create({
         color:'black',
     },
     button:{
-        backgroundColor: 'black',
         marginTop: 10,
-        width: 80,
+        width: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius:10,
     },
     textbutton:{
         color: 'white',
         padding: 10,
-    }
+    },
+    buttontext: {
+        color: 'white',
+        padding: 10,
+        fontSize: 12,
+    },
 })
 export default PaymentScreen;

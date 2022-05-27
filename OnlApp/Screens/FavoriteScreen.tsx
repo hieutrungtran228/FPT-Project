@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from "react";
-import {
-    Text,
-    View,
-    Image,
-    TouchableOpacity,
-    TextInput,
-    FlatList,
-    StyleSheet
-} from 'react-native'
-import Header from "../components/Header";
+import React ,{ useState, useEffect }from "react";
+import { View, FlatList, Text, Image, StyleSheet } from "react-native";
+import ListProduct from "./ListProduct";
 import getProducts from "../data/ItemProduct";
+import { useSelector } from "react-redux";
+import Header from "../components/Header";
+import { Button } from "react-native-paper";
 
+const FavoriteScreen = (props) => {
 
-const ListProduct = (props) => {
-
-    const{navigation, route} = props
-    const{navigate, goBack} = navigation
-    const [product, setProduct] = useState([])
+    const { navigation, routes } = props
+    const { navigate, goBack } = navigation
+    const [Product, setProduct] = useState([])
     useEffect(() => {
         getProducts()
             .then(responeProduct => setProduct(responeProduct))
     }, [])
-    const [searchText, setSearchText] = useState('')
-    const newProduct = product.map((item,) => "https://shop-ec-pro.herokuapp.com/" + item.image)
+    const favoriteData = useSelector(state => state.Favorite.items)
+    const [items, setItems] = useState([])
+    console.log('favoriteData', favoriteData);
+    
+    useEffect (() => {
+        let itemsFavorite = Product.filter(item => favoriteData.indexOf(item._id) !== -1)
+        setItems(itemsFavorite)
+    }, [favoriteData])
+    
     const renderItems = ({ item, index, image }) => {
         return (
             <View style={styles.list}>
@@ -30,7 +31,7 @@ const ListProduct = (props) => {
                     height: 150,
                     backgroundColor: 'green',
                 }}>
-
+                
                 </View>
                 <View>
                     <Text
@@ -52,41 +53,42 @@ const ListProduct = (props) => {
                     <Text style={styles.price}>${item.price}</Text>
                 </View>
             </View>
-
         )
     }
+    
     return (
         <View style={{
             flex: 1,
             backgroundColor: 'lightblue'
         }}>
-            <Header title="Home" />
-            <View style={styles.head}>
-                <Image
-                    style={styles.icon}
-                    source={require('../assets/search.png')} />
-                <TextInput style={styles.textinput}
-                    autoCorrect={false}
-                    onChangeText={(text) => {
-                        setSearchText(text)
-                    }}
-                />
-            </View>
+            <Header title='My Cart'/>
             <FlatList
                 style={{
                     flex: 1,
                 }}
-                data={product.filter(eachProduct => eachProduct.name.toLowerCase()
-                    .includes(searchText.toLowerCase()))}
+                data={items}
                 numColumns={2}
                 // @ts-ignore
                 renderItem={renderItems}
                 keyExtractor={eachProduct => eachProduct.name}
             />
+            <Button
+                style={styles.button}
+                mode='contained'
+                color='black'
+                onPress={() => {
+                    navigate('ShippingScreen')
+                }}>
+                <Text
+                    style={styles.buttontext}>
+                    Proceed to checkout
+                </Text>
+            </Button>
         </View>
     )
 }
 
+export default FavoriteScreen
 
 const styles = StyleSheet.create({
     textlist: {
@@ -137,24 +139,18 @@ const styles = StyleSheet.create({
         height: 15,
         marginTop: 7,
     },
+    buttontext: {
+        color: 'white',
+        padding: 10,
+        fontSize: 12,
+    },
+    button: {
+        backgroundColor: 'black',
+        marginTop: 10,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom:10,
+        alignSelf:'center'
+    },
 })
-export default ListProduct
-/** 
-{newProduct.map((photo) => {
-    return (
-        <Image style={{ width: 174, height: 150 }} 
-        source={{ uri: photo }} />
-    );
-})}
-{newProduct.map((photo) => {
-                        return (
-                            <Image 
-                            style={{
-                                height:30,
-                                width:30,
-                                resizeMode: 'cover'
-                            }}
-                            source={{ uri: photo }} />
-                        );
-                    })}
-*/

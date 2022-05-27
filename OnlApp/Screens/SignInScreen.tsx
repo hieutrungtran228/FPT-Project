@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Text,
     View,
-    TextInput,
     Image,
     ImageBackground,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { fetchAsyncLogin } from '../store/slices/auth';
+
 
 function SignInScreen(props) {
-    const{navigation, route} = props
-    const{navigate, goBack} = navigation
-    
+    const { navigation, route } = props
+    const { navigate, goBack } = navigation
+    const dispatch = useDispatch()
+    const [data, setData] = useState({
+        email: '',
+        password: '',
+    })
+
+    const testLogin = () => {
+        // @ts-ignore
+        dispatch(fetchAsyncLogin(data))
+            .then(res => {
+                if( !res.error ) {
+                    navigate('UITab')
+                }
+            })
+    }
     return (
         <View
             style={{
@@ -37,48 +54,54 @@ function SignInScreen(props) {
                 }}>
                 <View
                     style={styles.body}>
-                    <Text
-                        style={styles.text}>
-                        Email adress
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='Email'
+                            mode='outlined'
+                            activeOutlineColor='black'
                             placeholder="Enter email"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            value={data.email}
+                            onChangeText={(val) => setData({ ...data, email: val })}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        Password
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='Password'
+                            mode='outlined'
+                            activeOutlineColor='black'
                             placeholder="Enter password"
-                            placeholderTextColor={'white'}
-                            secureTextEntry={true}
+                            placeholderTextColor={'black'}
+                            secureTextEntry
+                            value={data.password}
+                            onChangeText={(val) => setData({ ...data, password: val })}
                         />
                     </View>
-                    <TouchableOpacity
-                    onPress={() => {
-                        navigate('ListProduct')
-                    }}
-                        style={styles.button}>
+                    <Button
+                        style={styles.button}
+                        mode='contained'
+                        color='black'
+                        /**onPress={() => {
+                            navigate('ListProduct')
+                        }}*/
+                        onPress={testLogin}>
                         <Text
                             style={styles.buttontext}>
                             Sign in
                         </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                    </Button>
+                    <Button
+                        color='white'
                         onPress={() => {
                             navigate('SignUpScreen')
                         }}
-                        style={styles.swap}>
+                        style={styles.text}>
                         <Text style={{
                             color: 'black',
                         }}>
                             New Customer? Register
                         </Text>
-                    </TouchableOpacity>
+                    </Button>
                 </View>
             </View>
         </View>
@@ -96,9 +119,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     button: {
-        backgroundColor: 'black',
         marginTop: 10,
-        width: 80,
+        width: 100,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -106,15 +128,10 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 10,
     },
-    swap: {
-        backgroundColor: '#F0F8FF',
-        marginTop: 10,
-        width: 160,
+    textinput: {
+        backgroundColor: 'lightgray'
     },
-    textinput:{
-        backgroundColor:'lightgray'
-    },
-    head:{
+    head: {
         color: 'black',
         fontSize: 35,
         marginLeft: 10,

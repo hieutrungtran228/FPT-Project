@@ -10,6 +10,8 @@ import ShipppingScreen from './Screens/ShippingScreen'
 import PaymentScreen from './Screens/PaymentScreen'
 import ListProduct from './Screens//ListProduct'
 import UITab from './navigation/UITab'
-import App from './navigation/App'
+import Rootstack from './navigation/Rootstack'
+import DetailsProduct from './Screens/DetailsProduct'
+import App from './App'
 
 AppRegistry.registerComponent(appName, () => App);

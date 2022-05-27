@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Text,
     View,
-    TextInput,
     Image,
     ImageBackground,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { fetchAsyncRegister } from '../store/slices/auth';
+import { AuthContext } from '../navigation/AuthProvider';
 
 function SignUpScreen(props) {
 
     const{navigation, route} = props
     const{navigate, goBack} = navigation
+    
+    const [data, setData] = useState({
+        name:'',
+        email: '',
+        password: '',
+        confirmPassword:'',
+    })
+
+    const dispatch = useDispatch()
+    // @ts-ignore
+    const { user, register } = useContext(AuthContext)
+    
+    const testRegister = () => {
+        // @ts-ignore
+        dispatch(fetchAsyncRegister(data))
+    }
+
+
     return (
         <View
             style={{
@@ -37,65 +58,77 @@ function SignUpScreen(props) {
                 }}>
                 <View
                     style={styles.body}>
-                    <Text
-                        style={styles.text}>
-                        Name
-                    </Text>
-                    <View style={styles.textinput}>
-                        <TextInput
+                    <View >
+                    <TextInput
+                            label='Name'
+                            mode='outlined'
+                            activeOutlineColor='black'
                             placeholder="Enter name"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            value={data.name}
+                            onChangeText={(val) => setData({ ...data, name: val })}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        Email adress
-                    </Text>
-                    <View style={styles.textinput}>
-                        <TextInput
+                    <View >
+                    <TextInput
+                            label='Email'
+                            mode='outlined'
+                            activeOutlineColor='black'
                             placeholder="Enter email"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            value={data.email}
+                            onChangeText={(val) => setData({ ...data, email: val })}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        Password
-                    </Text>
-                    <View style={styles.textinput}>
-                        <TextInput
+                    <View >
+                    <TextInput
+                            label='Password'
+                            mode='outlined'
+                            activeOutlineColor='black'
                             placeholder="Enter password"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            secureTextEntry={true}
+                            value={data.password}
+                            onChangeText={(val) => setData({ ...data, password: val })}
                         />
                     </View>
-
-                    <Text
-                        style={styles.text}>
-                        Confirm Password
-                    </Text>
-                    <View style={styles.textinput}>
-                        <TextInput
-                            placeholder="Confirm password"
-                            placeholderTextColor={'white'}
+                    <View>
+                    <TextInput
+                            label='Confirm password'
+                            mode='outlined'
+                            activeOutlineColor='black'
+                            placeholder="Enter password"
+                            placeholderTextColor={'black'}
+                            secureTextEntry={true}
+                            value={data.confirmPassword}
+                            onChangeText={(val) => setData({ ...data, confirmPassword: val })}
                         />
                     </View>
-                    <TouchableOpacity
-                        style={styles.button}>
+                    <Button
+                    style={styles.button}
+                    mode='contained'
+                    color='black'
+                    /**onPress={() => {
+                        navigate('ShippingScreen')
+                    }}*/
+                    onPress={testRegister}>
                         <Text
                             style={styles.buttontext}>
                             Register
                         </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                    </Button>
+                    <Button
+                        color='white'
                         onPress={() => {
                             navigate('SignInScreen')
                         }}
-                        style={styles.swapbutton}>
+                        >
                         <Text style={{
                             color: 'black',
                         }}>
                             Have an Account? Login
                         </Text>
-                    </TouchableOpacity>
+                    </Button>
                 </View>
             </View>
         </View>
@@ -114,13 +147,14 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'black',
         marginTop: 10,
-        width: 80,
+        width: 100,
         justifyContent: 'center',
         alignItems: 'center',
     },
     buttontext:{
         color: 'white',
         padding: 10,
+        fontSize:13,
     },
     swapbutton: {
         backgroundColor: '#F0F8FF',
@@ -130,6 +164,7 @@ const styles = StyleSheet.create({
     body: {
         height: 50,
         marginHorizontal: 10,
+        
     },
     head: {
         color: 'black',

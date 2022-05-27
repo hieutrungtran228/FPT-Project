@@ -1,15 +1,31 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
     Text,
     View,
-    TextInput,
-    Image,
-    ImageBackground,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-
+import { Button, TextInput, RadioButton } from 'react-native-paper';
 function ShippingScreen(props) {
+
+
+    const navigation= useNavigation()
+
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [postal, setPostal] = useState('')
+    const [country, setCountry] = useState('')
+
+    const order = () => {
+        // @ts-ignore
+        navigation.navigate("PlaceOrder",{
+            address : address,
+            city : city,
+            postal: postal,
+            country: country,
+        })
+    }
     return (
         <View
             style={{
@@ -34,56 +50,78 @@ function ShippingScreen(props) {
                 }}>
                 <View
                     style={styles.body}>
-                    <Text
-                        style={styles.text}>
-                        Address
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='Address'
+                            mode='outlined'
+                            value={address}
+                            activeOutlineColor='black'
                             placeholder="Enter address"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            onChangeText={(text) => setAddress(text)}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        City
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='City'
+                            mode='outlined'
+                            value={city}
+                            activeOutlineColor='black'
                             placeholder="Enter city"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            onChangeText={(text) => setCity(text)}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        Postal Code
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='Postal code'
+                            mode='outlined'
+                            value={postal}
+                            activeOutlineColor='black'
                             placeholder="Enter postal code"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            onChangeText={(text) => setPostal(text)}
                         />
                     </View>
-                    <Text
-                        style={styles.text}>
-                        Country
-                    </Text>
-                    <View style={styles.textinput}>
+                    <View>
                         <TextInput
+                            label='Country'
+                            mode='outlined'
+                            value={country}
+                            activeOutlineColor='black'
                             placeholder="Enter country"
-                            placeholderTextColor={'white'}
+                            placeholderTextColor={'black'}
+                            onChangeText={(text) => setCountry(text)}
                         />
                     </View>
-                    <TouchableOpacity
-                        style={styles.button}>
-                        <Text
-                            style={{
-                                color: 'white',
-                                padding: 10,
-                            }}>
-                            Continue
-                        </Text>
-                    </TouchableOpacity>
+                    <View
+                        style={{
+                            flex: 80,
+                        }}>
+                        <View
+                            style={styles.body}>
+                            <Text
+                                style={styles.text}>
+                                Select method
+                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginTop: 5, fontSize: 17 }}>
+                                    PayPal or Credit Card
+                                </Text>
+                                <RadioButton.Android value='test' status='checked' color='gray' />
+                            </View>
+                            <Button
+                                style={styles.button}
+                                mode='contained'
+                                color='black'
+                                onPress={order}>
+                                <Text
+                                    style={styles.buttontext}>
+                                    Continue
+                                </Text>
+                            </Button>
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
@@ -91,29 +129,31 @@ function ShippingScreen(props) {
 }
 
 const styles = StyleSheet.create({
-    head:{
+    head: {
         color: 'black',
         fontSize: 35,
         marginLeft: 10,
     },
-    text:{
+    text: {
         fontSize: 20,
         marginTop: 10,
         color: 'black'
     },
-    textinput:{
-        backgroundColor:'lightgray'
-    },
-    button:{
+    button: {
         backgroundColor: 'black',
         marginTop: 10,
-        width: 80,
+        width: 100,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    body:{
+    body: {
         height: 50,
         marginHorizontal: 10,
+    },
+    buttontext: {
+        color: 'white',
+        padding: 10,
+        fontSize: 12,
     },
 })
 export default ShippingScreen;

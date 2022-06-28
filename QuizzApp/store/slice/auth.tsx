@@ -51,14 +51,15 @@ const authSlice = createSlice({
                 }
             })
             .addCase(fetchAsyncRegister.fulfilled, (state, action) => {
-                console.log('action', action);
-                console.log('fetchAsyncRegister');
+                console.log('action', action);  
+                alert('create account complete');    
             })
             .addCase(fetchAsyncLogin.rejected, (state, action) => {
                 console.log(action.error.message);
             })
             .addCase(fetchAsyncRegister.rejected, (state, action) => {
                 console.log(action.error.message);
+                alert('fail');   
             })
     }
 })

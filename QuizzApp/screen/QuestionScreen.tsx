@@ -1,16 +1,39 @@
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { fetchQuestion } from '../store/slice/question'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, TextInput } from 'react-native-paper'
+import QuizButton from './QuizzButton'
 
 
 function QuestionScreen(props) {
 
     const { navigation, route } = props
     const { navigate, goBack } = navigation
-
+    const [question, setQuestion] = useState({})
     const [searchText, setSearchText] = useState('')
+    const [token, setToken] = useState(route.params.accessToken)
+    const getQuestionUser = () => {
+        axios
+            .get(
+                "https://fwa-ec-quiz-mock1.herokuapp.com/v1/questions?page=1&limit=4",
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((response) => {
+                setQuestion(response.data.results);
+                console.log('cau hoi day', response.data.results);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        console.log('token day', route.params.accessToken);
+
+    };
+    if (!question) {
+        getQuestionUser();
+    }
 
     return (
         <View style={{
@@ -41,45 +64,66 @@ function QuestionScreen(props) {
                             setSearchText(text)
                         }}
                     />
-
                 </View>
+
                 <View style={{
                     flex: 90,
                 }}>
                     <View style={{
                         flex: 50,
-                        backgroundColor: 'lightblue',
-                        borderTopLeftRadius: 30,
-                        borderTopRightRadius: 30,
+                        backgroundColor: 'white',
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+
                     }}>
-                        <Text style={styles.text}>
-                            Name header
-                        </Text>
-                    </View>
-                    <View style={{
-                        flex: 50,
-                        backgroundColor: 'lightgreen'
-                    }}>
-                        <Text style={styles.text1}>
-                            Continue Quiz
-                        </Text>
-                        <View style={{
-                            height: 180,
-                            backgroundColor: 'lightyellow'
-                        }}>
+                        <View style={{ flex: 5, flexDirection: 'row' }}>
+                            <Text style={styles.text1}>
+                                Popular
+                            </Text>
+                            <Text style={styles.text1}>
+                                Science
+                            </Text>
+                            <Text style={styles.text1}>
+                                Mathematic
+                            </Text>
+                            <Text style={[styles.text1, { color: '#0080FF', fontWeight: 'bold' }]}>
+                                Computer
+                            </Text>
+                        </View>
+                        <QuizButton
+                            quizName="UI UX Design"
+                            img_url=""
+                            buttonPressed={() => {
+                                navigation.navigate('DetailsScreen', {
+                                    accessToken: token
+                                }), { getQuestionUser }
+                            }}
+                        />
+                        <QuizButton
+                            quizName="Graphic Design"
+                            img_url=""
+                            buttonPressed={() => {
+                                navigation.navigate('DetailsScreen', {
+                                    accessToken: token
+                                }), { getQuestionUser }
+                            }}
+                        />
+                        <View>
 
                         </View>
-                        <Button
-                            style={styles.button}
-                            mode='contained'
-                            color='white'
-                            onPress={() => { }}
-                        >
-                            LOG IN
-                        </Button>
+                        <View style={{
+                            flex: 40,
+                        }}>
+                            <Text style={styles.text2}>
+                                Continue Quiz
+                            </Text>
+                            <View style={{
+                                height: 180,
+                            }}>
+                            </View>
+                        </View>
                     </View>
                 </View>
-
             </ImageBackground>
         </View>
     )
@@ -112,27 +156,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         height: 40,
     },
-    text: {
-        color: 'white',
-        fontSize: 14,
-        textAlign: 'center'
-
-    },
     text1: {
+        fontSize: 14,
+        marginLeft: 30,
+        marginTop: 5,
+    },
+    text2: {
         color: 'black',
         fontSize: 20,
         marginLeft: 20,
-    },
-    text2: {
-        color: 'white',
-        fontSize: 15,
-        textAlign: 'center',
-        fontStyle: 'italic',
-    },
-    text3: {
-        color: 'blue',
         fontWeight: 'bold',
-        marginLeft: 3,
     },
     button: {
         borderRadius: 100,
@@ -144,7 +177,11 @@ const styles = StyleSheet.create({
         marginTop: 100,
         alignSelf: 'center',
     },
-
+    chose: {
+        borderRadius: 100,
+        marginHorizontal: 10,
+        height: 42,
+    },
 })
 
 

@@ -8,7 +8,6 @@ const ListQuestion = (props) => {
     const [accessToken, setAccessToken] = useState("")
     let id = props.id;
     const [answer, setAnswer] = useState("");
-    const [btncolor, setBtncolor] = useState("")
     const [selected1, setSelected1] = useState(false)
     const [selected2, setSelected2] = useState(false)
     const [selected3, setSelected3] = useState(false)
@@ -51,37 +50,6 @@ const ListQuestion = (props) => {
             console.log(error);
         });
     };
-    
-    /*
-    const payload = []
-    const submitAnswer = () => {
-        payload.push({
-        "id": id,
-        "correctanswer": answer
-        })
-    }
-
-    <Button
-                style={styles.submit}
-                onPress={() => {
-                    props.submitAnswer(id, answer)
-                }}
-            >
-                <Text style={styles.submitText}>Submit</Text>
-            </Button>
-
-            <Button
-                style={styles.submit}
-                onPress={props.onPress}
-            //onPress = {() => console.log(payload)}
-            >
-                <Text style={styles.submitText}>End Quiz</Text>
-
-            </Button>
-    */
-
-
-
 
     return (
         <View style={{ backgroundColor: "white", height: "100%" }}>

@@ -9,9 +9,7 @@ const QuizButton = (props) => {
             <View style={styles.container2}>
                 <Image
                     style={styles.image}
-                    source={{
-                        
-                    }}
+                    source={{}}
                 />
                 <View
                     style={{

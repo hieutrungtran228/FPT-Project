@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { fetchQuestion } from '../store/slice/question'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button, TextInput } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import QuizButton from './QuizzButton'
 
 

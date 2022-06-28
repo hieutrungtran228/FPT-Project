@@ -1,11 +1,10 @@
 import React from "react";
-import { View, StyleSheet, ListRenderItem, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import axios from "axios";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
 
-const HEADER_HEIGHT = 250;
 import ListQuestion from "./ListQuestion";
 
 function QuizMain(props) {
@@ -33,23 +32,18 @@ function QuizMain(props) {
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             )
             .then((response) => {
-                /*alert(response.data.result);
-                if (
-                    response.data.result &&
-                    String(response.data.result) == "true"
-                ) {
-                    setScore((currScore) => currScore + 1);
-                }
-                console.log('dap an',response.data.result)*/
                 let count = 0
-                for (let i = 0; i < response.data.length; i++) {
+                for (let i = 0; i < response.data.length; i++) 
+                {
                     const ans = response.data.result
-                    if (String(ans) == "true") {
+                    if (String(ans) == "true") 
+                    {
                         count += 1
                         setScore(count);
                     }
                 }
-                if (score != 0) {
+                if (score != 0) 
+                {
                     console.log('diem',score)
                     alert(score)
                 }

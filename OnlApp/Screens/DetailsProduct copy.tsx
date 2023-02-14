@@ -12,7 +12,7 @@ import { fetchSingleProduct } from '../store/slices/product';
 import { useEffect } from 'react';
 import { Button, TextInput} from 'react-native-paper';
 import { Favorite } from '../store/slices/addtocart';
-function DetailsProduct(props) {
+function DetailsProductCopy(props) {
 
     const { navigation, routes } = props
     const { navigate, goBack } = navigation
@@ -23,6 +23,13 @@ function DetailsProduct(props) {
     const [isLogin, setIsLogin] = useState(true)
     console.log(isLogin);
     
+    const [showOption, setShowOption] = useState(false)
+    const [numReviews, setNumReviews] = useState("2")
+    const pressSubmit = () => {
+        setShowOption(true)
+        setText('')
+        setNumReviews('3')
+    }
     const dispatch = useDispatch()
     const route = useRoute();
     // @ts-ignore
@@ -61,23 +68,23 @@ function DetailsProduct(props) {
                 }}>
                     <Image
                         style={styles.image}
-                        source={{uri: 'https://i.insider.com/5e6bc61984159f583f4c7432?width=700&format=jpeg&auto=webp'}} />
+                        source={{uri: 'https://akbroshop.com/wp-content/uploads/2021/07/mrxj2-av1-572x572.jpg'}} />
             </View>
             <View>
-                <Text style={styles.textlist}>
-                Logitech mouse
+                <Text style={styles.textname}>
+                Airpod 2
                 </Text>
                 <Text style={styles.price}>
-                    $3200
+                    $100
                 </Text>
                 <View style={{
                     flexDirection: 'row',
                 }}>
-                    <Text style={styles.textlist}>4.5</Text>
+                    <Text style={styles.textlist}>4</Text>
                     <Image
                         style={styles.star}
                         source={require('../assets/star.png')} />
-                    <Text style={styles.textlist}>1 reviews</Text>
+                    <Text style={styles.textlist}>{numReviews} reviews</Text>
                     <Text style={styles.status}>
                                     In Stock
                                 </Text>
@@ -98,30 +105,78 @@ function DetailsProduct(props) {
                     })()} */}
                 </View>
                 <Text style={styles.script}>
-                Logitech MX Master Mouse - Logitech's office mouse line is one of the most popular today. With the mission of "Own your project," Logitech consistently creates game-changing products that "change the way you work."
+                    With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case, AirPods deliver an incredible wireless headphone experience. Simply take them out and they’re ready to use with all your devices. Put them in your ears and they connect immediately, immersing you in rich, high-quality sound. Just like magic.
                 </Text>
 
-                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 10 }}>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop:10}}>
                     <View>
                         <Image
                             style={styles.imagecmt}
                             source={require('../assets/noava.png')} />
                     </View>
                     <View>
-                        <Text style={{ marginLeft: 10 }}>
-                            75kzfcmlj1
+                        <Text style={{marginLeft:10}}>
+                        trq311zpyw
                         </Text>
-                        <Text style={{ marginLeft: 10 }}>
-                            🌟🌟
+                        <Text style={{marginLeft:10}}>
+                        🌟🌟
                         </Text>
                     </View>
                 </View>
-                <Text style={{ marginLeft: 15, fontSize: 17, color: 'black' }}>
-                    Good product
+                <Text style={{marginLeft:15, fontSize:17, color:'black'}}>
+                    Too expensive
+                </Text>
+                <Text style={{marginLeft:15, fontSize:12}}>
+                    2022-09-14 12:23
+                </Text>
+
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop:10}}>
+                    <View>
+                        <Image
+                            style={styles.imagecmt}
+                            source={require('../assets/noava.png')} />
+                    </View>
+                    <View>
+                        <Text style={{marginLeft:10}}>
+                        cnguyn824
+                        </Text>
+                        <Text style={{marginLeft:10}}>
+                        🌟🌟🌟🌟🌟
+                        </Text>
+                    </View>
+                </View>
+                <Text style={{marginLeft:15, fontSize:17, color:'black'}}>
+                    This product is good
                 </Text>
                 <Text style={{ marginLeft: 15, fontSize: 12 }}>
-                    2022-10-07 21:49
+                    2022-10-02 00:10
                 </Text>
+
+                {showOption && (
+                    <View>
+                        <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 10 }}>
+                            <View>
+                                <Image
+                                    style={styles.imagecmt}
+                                    source={require('../assets/noava.png')} />
+                            </View>
+                            <View>
+                                <Text style={{ marginLeft: 10 }}>
+                                    test1
+                                </Text>
+                                {/* <Text style={{ marginLeft: 10 }}>
+                                    🌟🌟🌟🌟🌟
+                                </Text> */}
+                            </View>
+                        </View>
+                        <Text style={{ marginLeft: 15, fontSize: 17, color: 'black' }}>
+                            test comment
+                        </Text>
+                        <Text style={{ marginLeft: 15, fontSize: 12 }}>
+                            2022-10-23 17:32
+                        </Text>
+                    </View>
+                )}
 
                 <Text style={styles.review}>WRITE A CUSTOMER REVIEW</Text>
                 {
@@ -129,12 +184,12 @@ function DetailsProduct(props) {
                         <Text
                             onPress={
                                 navigate('SignInScreen')
-                        }
-                        style={styles.script}>
+                            }
+                            style={styles.script}>
                             Login to write review
                         </Text>
                     ) : (
-                        <View style={{marginHorizontal:10}}>
+                        <View style={{ marginHorizontal: 10 }}>
                             <TextInput
                                 label="Review"
                                 value={text}
@@ -145,7 +200,7 @@ function DetailsProduct(props) {
                                 mode='contained'
                                 color='black'
                                 // @ts-ignore
-                                onPress={text => setText('')}>
+                                onPress={pressSubmit}>
                                 <Text
                                     style={styles.buttontext}>
                                     Submit
@@ -202,17 +257,20 @@ const styles = StyleSheet.create({
     head: {
         flex: 1
     },
-    imagecmt:{
-        height:40,
-        width:40,
-        borderRadius:100,
-    },
     textlist: {
         marginTop: 10,
         marginLeft: 15,
         color: 'black',
         marginHorizontal: 10,
         fontSize: 20,
+    },
+    textname: {
+        marginTop: 10,
+        marginLeft: 15,
+        color: 'black',
+        marginHorizontal: 10,
+        fontSize: 25,
+        fontWeight:'500'
     },
     price: {
         color: 'red',
@@ -272,10 +330,15 @@ const styles = StyleSheet.create({
     image:{
         height:350,
         width:395,
+    },
+    imagecmt:{
+        height:40,
+        width:40,
+        borderRadius:100,
     }
 })
 
 
-export default DetailsProduct
+export default DetailsProductCopy
 
 

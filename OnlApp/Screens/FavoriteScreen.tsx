@@ -8,6 +8,23 @@ import { Button } from "react-native-paper";
 
 const FavoriteScreen = (props) => {
 
+    const [dataProduct, setDataProduct] = useState([
+        {
+            url : 'https://akbroshop.com/wp-content/uploads/2021/07/mrxj2-av1-572x572.jpg',
+            name : 'Airpod 2',
+            numReviews: 3,
+            rating: 4,
+            price: 100,
+        },
+        {
+            url : 'https://i.insider.com/5e6bc61984159f583f4c7432?width=700&format=jpeg&auto=webp',
+            name : 'Logitech mouse',
+            numReviews: 1,
+            rating: 4.5,
+            price: 3200,
+        },
+        
+    ])
     const { navigation, routes } = props
     const { navigate, goBack } = navigation
     const [Product, setProduct] = useState([])
@@ -29,9 +46,10 @@ const FavoriteScreen = (props) => {
             <View style={styles.list}>
                 <View style={{
                     height: 150,
-                    backgroundColor: 'green',
                 }}>
-                
+                    <Image
+                        style={styles.image}
+                        source={{ uri: item.url }} />
                 </View>
                 <View>
                     <Text
@@ -40,7 +58,7 @@ const FavoriteScreen = (props) => {
                                 _id: item._id
                             })
                         }}
-                        style={styles.textlist}>{item.name}</Text>
+                        style={styles.textname}>{item.name}</Text>
                     <Text style={styles.textlist}>{item.numReviews} reviews</Text>
                     <View style={{
                         flexDirection: 'row',
@@ -59,14 +77,14 @@ const FavoriteScreen = (props) => {
     return (
         <View style={{
             flex: 1,
-            backgroundColor: 'lightblue'
+            backgroundColor: '#F0F8FF'
         }}>
             <Header title='My Cart'/>
             <FlatList
                 style={{
                     flex: 1,
                 }}
-                data={items}
+                data={dataProduct}
                 numColumns={2}
                 // @ts-ignore
                 renderItem={renderItems}
@@ -77,7 +95,7 @@ const FavoriteScreen = (props) => {
                 mode='contained'
                 color='black'
                 onPress={() => {
-                    navigate('ShippingScreen')
+                    navigate('BillInfor')
                 }}>
                 <Text
                     style={styles.buttontext}>
@@ -96,8 +114,15 @@ const styles = StyleSheet.create({
         color: 'black',
         marginHorizontal: 10,
     },
-    price: {
+    textname: {
+        marginTop: 5,
         color: 'black',
+        marginHorizontal: 10,
+        fontSize:15,
+        fontWeight:'500'
+    },
+    price: {
+        color: 'red',
         fontSize: 20,
         marginHorizontal: 10,
     },
@@ -153,4 +178,8 @@ const styles = StyleSheet.create({
         marginBottom:10,
         alignSelf:'center'
     },
+    image:{
+        height:150,
+        width:174,
+    }
 })

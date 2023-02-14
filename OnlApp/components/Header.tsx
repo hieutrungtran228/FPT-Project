@@ -7,18 +7,15 @@ const Header = ({ title }: any) => {
     const navigation = useNavigation<any>();
 
     const openDrawer = () => {
-        navigation.openDrawer()
+      
     }
 
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={openDrawer}>
-                <Image
-                    style={styles.star}
-                    source={require('../assets/star.png')} />
                 <View style={styles.head}>
-                    <Text>{title}</Text>
+                    <Text style={{fontSize:20, color:'black'}}>{title}</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -32,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'lightblue',
+        backgroundColor: '#F0F8FF',
         marginBottom: 6,
         marginTop: 12,
     },

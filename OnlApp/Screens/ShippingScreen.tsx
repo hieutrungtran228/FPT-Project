@@ -40,7 +40,7 @@ function ShippingScreen(props) {
                 <Text
                     style={styles.head}>
                     {' '}
-                    SHIPPING
+                    SHIPPING ADDRESS
                 </Text>
             </View>
 
@@ -74,17 +74,6 @@ function ShippingScreen(props) {
                     </View>
                     <View>
                         <TextInput
-                            label='Postal code'
-                            mode='outlined'
-                            value={postal}
-                            activeOutlineColor='black'
-                            placeholder="Enter postal code"
-                            placeholderTextColor={'black'}
-                            onChangeText={(text) => setPostal(text)}
-                        />
-                    </View>
-                    <View>
-                        <TextInput
                             label='Country'
                             mode='outlined'
                             value={country}
@@ -98,23 +87,13 @@ function ShippingScreen(props) {
                         style={{
                             flex: 80,
                         }}>
-                        <View
-                            style={styles.body}>
-                            <Text
-                                style={styles.text}>
-                                Select method
-                            </Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ marginTop: 5, fontSize: 17 }}>
-                                    PayPal or Credit Card
-                                </Text>
-                                <RadioButton.Android value='test' status='checked' color='gray' />
-                            </View>
+                        <View style={styles.body}>
                             <Button
                                 style={styles.button}
                                 mode='contained'
                                 color='black'
-                                onPress={order}>
+                                onPress={order}
+                            >
                                 <Text
                                     style={styles.buttontext}>
                                     Continue
@@ -141,10 +120,12 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'black',
-        marginTop: 10,
-        width: 100,
+        marginTop: 40,
+        width: 200,
+        height:35,
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: 'center'
     },
     body: {
         height: 50,

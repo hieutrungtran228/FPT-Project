@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -7,9 +7,10 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, RadioButton } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { fetchAsyncLogin } from '../store/slices/auth';
+import Toast from 'react-native-toast-message';
 
 
 function SignInScreen(props) {
@@ -21,15 +22,43 @@ function SignInScreen(props) {
         password: '',
     })
 
+    const[status,setStatus]=useState('1')
+    const showToast = () => {
+        Toast.show({
+            type: 'info',
+            text1: 'Register successful ',
+        });
+    }
+    const showToast2 = () => {
+        Toast.show({
+            type: 'error',
+            text1: 'Login fail ',
+        });
+    }
+    
+    useEffect(() => {
+        showToast()
+    }, [status])
+    const [checked1, setChecked1] = useState(false);
+    const pressradio = () => {
+        setChecked1(!checked1)
+    }
     const testLogin = () => {
         // @ts-ignore
-        dispatch(fetchAsyncLogin(data))
-            .then(res => {
-                if( !res.error ) {
-                    navigate('UITab')
-                }
-            })
+        // dispatch(fetchAsyncLogin(data))
+        //     .then(res => {
+        //         if( !res.error ) {
+        //             navigate('UITab')
+        //         }
+        //     })
+        
+            if (data.email == 'wrong') {
+                showToast2()
+            } else {
+                navigate('UITab')
+            }
     }
+    const [passwordVisible, setPasswordVisible] = useState(true);
     return (
         <View
             style={{
@@ -40,14 +69,14 @@ function SignInScreen(props) {
                 style={{
                     marginTop: 70,
                     flex: 10,
+                    alignSelf:'center'
                 }}>
                 <Text
                     style={styles.head}>
-                    {' '}
                     SIGN IN
                 </Text>
             </View>
-
+                <Toast />
             <View
                 style={{
                     flex: 80,
@@ -72,28 +101,47 @@ function SignInScreen(props) {
                             activeOutlineColor='black'
                             placeholder="Enter password"
                             placeholderTextColor={'black'}
-                            secureTextEntry
+                            secureTextEntry={passwordVisible}
+                            right={<TextInput.Icon icon={passwordVisible ? require('../assets/eye.png') : require('../assets/eye-off.png')}
+                                onPress={() => setPasswordVisible(!passwordVisible)} />}
                             value={data.password}
                             onChangeText={(val) => setData({ ...data, password: val })}
                         />
                     </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <RadioButton
+                            value="first"
+                            color='grey'
+                            status={checked1 === true ? 'checked' : 'unchecked'}
+                            onPress={pressradio}
+                        />
+                        <Text style={{fontSize:15, marginTop:7, color:'black'}}>
+                            Stay login
+                        </Text>
+                        <Text
+                            style={{ fontSize: 15, marginTop: 7, marginLeft: 138, color: 'black' }}
+                            //onPress={setStatus('2')}
+                        >
+                            Forgot password?
+                        </Text>
+                    </View>
+
                     <Button
                         style={styles.button}
                         mode='contained'
                         color='black'
                         /**onPress={() => {
-                            navigate('ListProduct')
-                        }}*/
+                        navigate('ListProduct')
+                    }}*/
                         onPress={testLogin}>
-                        <Text
-                            style={styles.buttontext}>
+                        <Text style={styles.buttontext}>
                             Sign in
                         </Text>
                     </Button>
                     <Button
                         color='white'
                         onPress={() => {
-                            navigate('SignUpScreen')
+                            navigation.replace('SignUpScreen')
                         }}
                         style={styles.text}>
                         <Text style={{
@@ -119,10 +167,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     button: {
-        marginTop: 10,
-        width: 100,
+        backgroundColor: 'black',
+        marginTop: 40,
+        width: 200,
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf:'center',
+        height:35,
     },
     buttontext: {
         color: 'white',

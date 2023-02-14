@@ -12,13 +12,13 @@ import Header from "../components/Header";
 import getProducts from "../data/ItemProduct";
 import Toast from 'react-native-toast-message';
 
-const ListProduct = (props) => {
+const ListProductCopy = (props) => {
 
     const [dataProduct, setDataProduct] = useState([
         {
             url : 'https://akbroshop.com/wp-content/uploads/2021/07/mrxj2-av1-572x572.jpg',
             name : 'Airpod 2',
-            numReviews: 2,
+            numReviews: 3,
             rating: 4,
             price: 100,
         },
@@ -58,15 +58,7 @@ const ListProduct = (props) => {
             price: 1200,
         },
     ])
-    const showToast = () => {
-        Toast.show({
-          type: 'success',
-          text1: 'Login successful ',
-        });
-    }
-    useEffect(() => {
-        showToast()
-    }, [])
+    
     const{navigation, route} = props
     const{navigate, goBack} = navigation
     const [product, setProduct] = useState([])
@@ -216,7 +208,7 @@ const styles = StyleSheet.create({
         width:174,
     }
 })
-export default ListProduct
+export default ListProductCopy
 /** 
 {newProduct.map((photo) => {
     return (
